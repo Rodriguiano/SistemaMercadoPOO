@@ -1,0 +1,62 @@
+interface SistemaSupermercadoInterface {
+    + adicionarProduto(produto: Produto): void
+    + removerProduto(codigo: int): void
+    + buscarProduto(codigo: int): Produto
+    + listarProdutos(): Map<Integer, Produto>
+    + calcularTotal(): double
+    + finalizarCompra(): void
+    + adicionarCliente(cliente: Cliente): void
+    + removerCliente(nome: String): void
+}
+
+class SistemaSupermercadoGUI {
+    - caixa: CaixaImpl
+    + exibirInterface(): void
+}
+
+class CaixaImpl {
+    - estoque: Map<Integer, Produto>
+    - clientes: Map<String, Cliente>
+    - carrinho: List<Produto>
+    - tipoPagamento: TipoPagamento
+    + adicionarProduto(produto: Produto): void
+    + removerProduto(codigo: int): void
+    + buscarProduto(codigo: int): Produto
+    + listarProdutos(): Map<Integer, Produto>
+    + calcularTotal(): double
+    + finalizarCompra(): void
+    + adicionarCliente(cliente: Cliente): void
+    + removerCliente(nome: String): void
+    + setTipoPagamento(tipoPagamento: TipoPagamento): void
+    + getTipoPagamento(): TipoPagamento
+}
+
+class PersistenciaDados {
+    + salvarEstoque(estoque: Map<Integer, Produto>, nomeArquivo: String): void
+    + carregarEstoque(nomeArquivo: String): Map<Integer, Produto>
+}
+
+enum TipoPagamento {
+    DINHEIRO
+    CARTAO_CREDITO
+    CARTAO_DEBITO
+    VALE_ALIMENTACAO
+}
+
+class Produto {
+    - codigo: int
+    - nome: String
+    - preco: double
+    + Produto(codigo: int, nome: String, preco: double)
+    + getCodigo(): int
+    + getNome(): String
+    + getPreco(): double
+}
+
+class Cliente {
+    - nome: String
+    - endereco: String
+    + Cliente(nome: String, endereco: String)
+    + getNome(): String
+    + getEndereco(): String
+}
