@@ -1,9 +1,6 @@
 package SIstemaMercado;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CaixaImpl implements SistemaSupermercadoInterface {
 
@@ -15,53 +12,34 @@ public class CaixaImpl implements SistemaSupermercadoInterface {
 
     private TipoPagamento tipoPagamento;
 
+    @Override
     public void adicionarProduto(Produto produto) {
-        if (estoque == null) {
-            estoque = new HashMap<>();
-        }
-        if (produto == null) {
-            throw new IllegalArgumentException("O produto não pode ser nulo");
-        }
-        estoque.put(produto.getCodigo(), produto);
+
     }
 
+    @Override
     public void removerProduto(int codigo) {
-        if (estoque == null) {
-            estoque = new HashMap<>();
-        }
-        estoque.remove(codigo);
+
     }
 
+    @Override
     public Produto buscarProduto(int codigo) {
-        if (estoque == null) {
-            estoque = new HashMap<>();
-        }
-        return estoque.get(codigo);
+        return null;
     }
 
-    public Map<Integer, Produto> listarProdutos() {
-        if (estoque == null) {
-            estoque = new HashMap<>();
-        }
-        return new HashMap<>(estoque);
+    @Override
+    public Collection<Produto> listarProdutos() {
+        return null;
     }
 
+    @Override
     public double calcularTotal() {
-        if (carrinho == null) {
-            carrinho = new ArrayList<>();
-        }
-        double total = 0.0;
-        for (Produto produto : carrinho) {
-            total += produto.getPreco();
-        }
-        return total;
+        return 0;
     }
 
+    @Override
     public void finalizarCompra() {
-        if (carrinho == null) {
-            carrinho = new ArrayList<>();
-        }
-        carrinho.clear();
+
     }
 
     public void adicionarCliente(Cliente cliente) {
