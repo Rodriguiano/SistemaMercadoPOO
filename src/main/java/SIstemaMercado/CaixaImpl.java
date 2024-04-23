@@ -15,55 +15,6 @@ public class CaixaImpl implements SistemaSupermercadoInterface {
 
     private TipoPagamento tipoPagamento;
 
-    public void adicionarProduto(Produto produto) {
-        if (estoque == null) {
-            estoque = new HashMap<>();
-        }
-        if (produto == null) {
-            throw new IllegalArgumentException("O produto não pode ser nulo");
-        }
-        estoque.put(produto.getCodigo(), produto);
-    }
-
-    public void removerProduto(int codigo) {
-        if (estoque == null) {
-            estoque = new HashMap<>();
-        }
-        estoque.remove(codigo);
-    }
-
-    public Produto buscarProduto(int codigo) {
-        if (estoque == null) {
-            estoque = new HashMap<>();
-        }
-        return estoque.get(codigo);
-    }
-
-    public Map<Integer, Produto> listarProdutos() {
-        if (estoque == null) {
-            estoque = new HashMap<>();
-        }
-        return new HashMap<>(estoque);
-    }
-
-    public double calcularTotal() {
-        if (carrinho == null) {
-            carrinho = new ArrayList<>();
-        }
-        double total = 0.0;
-        for (Produto produto : carrinho) {
-            total += produto.getPreco();
-        }
-        return total;
-    }
-
-    public void finalizarCompra() {
-        if (carrinho == null) {
-            carrinho = new ArrayList<>();
-        }
-        carrinho.clear();
-    }
-
     public void adicionarCliente(Cliente cliente) {
         if (clientes == null) {
             clientes = new HashMap<>();
