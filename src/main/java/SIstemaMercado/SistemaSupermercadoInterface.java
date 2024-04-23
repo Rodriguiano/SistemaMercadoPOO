@@ -2,7 +2,7 @@ package SIstemaMercado;
 
 import java.util.Map;
 
-interface SistemaSupermercadoInterface {
+interface SistemaSupermercadoInterface<String> {
     public void adicionarProduto(Produto produto);
     public void removerProduto(int codigo);
     public Produto buscarProduto(int codigo);
