@@ -34,14 +34,19 @@ public class CaixaImpl implements SistemaSupermercadoInterface {
 
     @Override
     public Produto buscarProduto(int codigo) {
-        return null;
+        if (estoque == null || estoque.isEmpty()) {
+            return null;
+        }
+        return estoque.get(codigo);
     }
 
     @Override
     public Collection<Produto> listarProdutos() {
-        return null;
+        if (estoque == null || estoque.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return estoque.values();
     }
-
     @Override
     public double calcularTotal() {
         double total = 0;
@@ -55,7 +60,20 @@ public class CaixaImpl implements SistemaSupermercadoInterface {
 
     @Override
     public void finalizarCompra() {
-
+        if (carrinho == null || carrinho.isEmpty()) {
+            System.out.println("O carrinho está vazio. Adicione produtos antes de finalizar a compra.");
+            return;
+        }
+        double total = calcularTotal();
+        System.out.println("Total da compra: " + total);
+        if (tipoPagamento == null) {
+            System.out.println("Tipo de pagamento não definido. Defina um tipo de pagamento antes de finalizar a compra.");
+            return;
+        }
+        System.out.println("Pagamento realizado por: " + tipoPagamento);
+        // Aqui você pode adicionar a lógica de processamento de pagamento, como conexão com um sistema de pagamento externo, etc.
+        // Depois de processar o pagamento, você pode limpar o carrinho, atualizar o estoque, etc.
+        carrinho.clear();
     }
 
     public void adicionarCliente(Cliente cliente) {
@@ -70,8 +88,11 @@ public class CaixaImpl implements SistemaSupermercadoInterface {
 
     @Override
     public void removerCliente(Object nome) {
-
-    }
+        if (nome instanceof String) {
+            removerCliente((String) nome);
+        } else {
+            throw new IllegalArgumentException("Tipo de nome inválido. Deve ser uma instância de String.");
+        }
 
     public void removerCliente(String nome) {
         if (clientes == null) {
