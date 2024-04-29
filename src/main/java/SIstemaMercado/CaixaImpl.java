@@ -97,9 +97,6 @@ public class CaixaImpl implements SistemaSupermercadoInterface {
             throw new IllegalArgumentException("Tipo de nome inválido. Deve ser uma instância de String.");
         }
     }
-
-
-
     public void setTipoPagamento (TipoPagamento tipoPagamento){
         if (tipoPagamento == null) {
             throw new IllegalArgumentException("O pagamento não pode ser nulo");
@@ -110,7 +107,49 @@ public class CaixaImpl implements SistemaSupermercadoInterface {
     TipoPagamento getTipoPagamento () {
         return tipoPagamento;
     }
+    public Produto buscarProdutoPorNome(String nomeProduto) {
+        if (estoque == null || estoque.isEmpty()) {
+            return null;
+        }
+        for (Produto produto : estoque.values()) {
+            if (produto.getNome().equalsIgnoreCase(nomeProduto)) {
+                return produto;
+            }
+        }
+        return null;
+    }
+
+    public void adicionarProdutoAoCarrinho(Produto produto) {
+        if (carrinho == null) {
+            carrinho = new ArrayList<>();
+        }
+        carrinho.add(produto);
+    }
+
+    public List<Produto> getCarrinho() {
+        return carrinho;
+    }
+
+    public void removerProdutoDoCarrinho(Produto produto) {
+        if (carrinho != null) {
+            carrinho.remove(produto);
+        }
+    }
+
+    public Collection<Produto> listarProdutosPorCategoria(Categoria categoria) {
+        if (estoque == null || estoque.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<Produto> produtosPorCategoria = new ArrayList<>();
+        for (Produto produto : estoque.values()) {
+            if (produto.getCategoria() == categoria) {
+                produtosPorCategoria.add(produto);
+            }
+        }
+        return produtosPorCategoria;
+    }
 }
+
 
 
 //teste
