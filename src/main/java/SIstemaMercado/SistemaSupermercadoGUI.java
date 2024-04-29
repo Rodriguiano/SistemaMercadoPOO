@@ -1,64 +1,73 @@
 package SIstemaMercado;
 
-import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
-public class SistemaSupermercadoGUI extends Application {
+public class SistemaSupermercadoGUI extends JFrame {
     private CaixaImpl caixa;
 
-    @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("Sistema de Supermercado");
+    private JTextField inputProduto;
+    private JTextField inputCliente;
+    private JComboBox<Categoria> comboBoxCategorias;
 
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(20, 20, 20, 20));
-        grid.setVgap(10);
-        grid.setHgap(10);
+    public SistemaSupermercadoGUI() {
+        super("Sistema de Supermercado");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(400, 200);
 
-        Label labelProduto = new Label("Produto:");
-        GridPane.setConstraints(labelProduto, 0, 0);
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4, 2, 10, 10));
 
-        TextField inputProduto = new TextField();
-        inputProduto.setPromptText("Nome do produto");
-        GridPane.setConstraints(inputProduto, 1, 0);
+        JLabel labelProduto = new JLabel("Produto:");
+        panel.add(labelProduto);
 
-        Label labelCliente = new Label("Cliente:");
-        GridPane.setConstraints(labelCliente, 0, 1);
+        inputProduto = new JTextField();
+        panel.add(inputProduto);
 
-        TextField inputCliente = new TextField();
-        inputCliente.setPromptText("Nome do cliente");
-        GridPane.setConstraints(inputCliente, 1, 1);
+        JLabel labelCliente = new JLabel("Cliente:");
+        panel.add(labelCliente);
 
-        Button btnAdicionarProduto = new Button("Adicionar Produto");
-        GridPane.setConstraints(btnAdicionarProduto, 2, 0);
+        inputCliente = new JTextField();
+        panel.add(inputCliente);
 
-        Button btnRemoverProduto = new Button("Remover Produto");
-        GridPane.setConstraints(btnRemoverProduto, 3, 0);
+        JLabel labelCategoria = new JLabel("Categoria:");
+        panel.add(labelCategoria);
 
-        Button btnAdicionarCliente = new Button("Adicionar Cliente");
-        GridPane.setConstraints(btnAdicionarCliente, 2, 1);
+        comboBoxCategorias = new JComboBox<>(Categoria.values());
+        panel.add(comboBoxCategorias);
 
-        Button btnRemoverCliente = new Button("Remover Cliente");
-        GridPane.setConstraints(btnRemoverCliente, 3, 1);
+        JButton btnAdicionarProduto = new JButton("Adicionar Produto");
+        btnAdicionarProduto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Implemente a lógica para adicionar o produto
+            }
+        });
+        panel.add(btnAdicionarProduto);
 
-        Button btnFinalizarCompra = new Button("Finalizar Compra");
-        GridPane.setConstraints(btnFinalizarCompra, 1, 2);
+        JButton btnFinalizarCompra = new JButton("Finalizar Compra");
+        btnFinalizarCompra.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Implemente a lógica para finalizar a compra
+            }
+        });
+        panel.add(btnFinalizarCompra);
 
-        grid.getChildren().addAll(labelProduto, inputProduto, labelCliente, inputCliente,
-                btnAdicionarProduto, btnRemoverProduto, btnAdicionarCliente, btnRemoverCliente,
-                btnFinalizarCompra);
-
-        Scene scene = new Scene(grid, 400, 200);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        add(panel);
+        setVisible(true);
     }
 
     public static void main(String[] args) {
-        launch(args);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new SistemaSupermercadoGUI();
+            }
+        });
     }
 }
