@@ -47,6 +47,7 @@ public class CaixaImpl implements SistemaSupermercadoInterface {
         }
         return estoque.values();
     }
+
     @Override
     public double calcularTotal() {
         double total = 0;
@@ -89,26 +90,26 @@ public class CaixaImpl implements SistemaSupermercadoInterface {
     @Override
     public void removerCliente(Object nome) {
         if (nome instanceof String) {
-            removerCliente((String) nome);
+            String nomeCliente = (String) nome;
+            if (clientes == null) {
+                clientes = new HashMap<>();
+            }
+            clientes.remove(nomeCliente);
         } else {
             throw new IllegalArgumentException("Tipo de nome inválido. Deve ser uma instância de String.");
         }
-
-    public void removerCliente(String nome) {
-        if (clientes == null) {
-            clientes = new HashMap<>();
-        }
-        clientes.remove(nome);
     }
 
-    public void setTipoPagamento(TipoPagamento tipoPagamento) {
+
+
+    public void setTipoPagamento (TipoPagamento tipoPagamento){
         if (tipoPagamento == null) {
             throw new IllegalArgumentException("O pagamento não pode ser nulo");
         }
         this.tipoPagamento = tipoPagamento;
     }
 
-    TipoPagamento getTipoPagamento() {
+    TipoPagamento getTipoPagamento () {
         return tipoPagamento;
     }
 }
