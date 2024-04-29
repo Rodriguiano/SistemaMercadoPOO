@@ -72,8 +72,6 @@ public class CaixaImpl implements SistemaSupermercadoInterface {
             return;
         }
         System.out.println("Pagamento realizado por: " + tipoPagamento);
-        // Aqui você pode adicionar a lógica de processamento de pagamento, como conexão com um sistema de pagamento externo, etc.
-        // Depois de processar o pagamento, você pode limpar o carrinho, atualizar o estoque, etc.
         carrinho.clear();
     }
 
