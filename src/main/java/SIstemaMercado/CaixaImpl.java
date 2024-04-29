@@ -111,3 +111,6 @@ public class CaixaImpl implements SistemaSupermercadoInterface {
         return tipoPagamento;
     }
 }
+
+
+//teste
