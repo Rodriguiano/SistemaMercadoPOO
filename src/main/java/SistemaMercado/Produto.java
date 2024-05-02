@@ -1,19 +1,16 @@
-package SIstemaMercado;
+package SistemaMercado;
 
-class Produto {
+public class Produto {
     private int codigo;
     private String nome;
     private double preco;
     private Categoria categoria;
 
-
-    public Produto(int codigo, String nome, double preco) {
+    public Produto(int codigo, String nome, double preco, Categoria categoria) {
         this.codigo = codigo;
         this.nome = nome;
         this.preco = preco;
         this.categoria = categoria;
-
-
     }
 
     public int getCodigo() {
@@ -42,5 +39,9 @@ class Produto {
 
     public Categoria getCategoria() {
         return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }

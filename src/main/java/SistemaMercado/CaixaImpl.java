@@ -1,4 +1,4 @@
-package SIstemaMercado;
+package SistemaMercado;
 
 import java.util.*;
 
@@ -152,4 +152,3 @@ public class CaixaImpl implements SistemaSupermercadoInterface {
 
 
 
-//teste

@@ -1,4 +1,4 @@
-package SIstemaMercado;
+package SistemaMercado;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

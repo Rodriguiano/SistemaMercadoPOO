@@ -1,4 +1,4 @@
-package SIstemaMercado;
+package SistemaMercado;
 
 import java.util.ArrayList;
 import java.util.List;

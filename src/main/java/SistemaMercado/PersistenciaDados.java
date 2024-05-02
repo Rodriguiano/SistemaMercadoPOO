@@ -1,4 +1,4 @@
-package SIstemaMercado;
+package SistemaMercado;
 
 import java.io.*;
 import java.util.Map;

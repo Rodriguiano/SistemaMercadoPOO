@@ -1,4 +1,4 @@
-package SIstemaMercado;
+package SistemaMercado;
 
 public class Cliente {
     private String nome;
