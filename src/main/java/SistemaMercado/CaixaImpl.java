@@ -4,47 +4,59 @@ import java.util.*;
 
 public class CaixaImpl implements SistemaSupermercadoInterface {
 
-    private Map<Integer, Produto> estoque;
-
     private Map<String, Cliente> clientes;
-
+    private Map<Integer, Produto> estoque;
     private List<Produto> carrinho;
-
     private TipoPagamento tipoPagamento;
+    private List<Produto> produtosDisponiveis;
+
+    public CaixaImpl() {
+        clientes = new HashMap<>();
+        estoque = new HashMap<>();
+        carrinho = new ArrayList<>();
+        tipoPagamento = null;
+        produtosDisponiveis = new ArrayList<>();
+
+        adicionarProdutosDisponiveis();
+    }
+
+    private void adicionarProdutosDisponiveis() {
+        Produto cerveja = new Produto(101, "Cerveja", 5.99, Categoria.BEBIDA);
+        Produto refrigerante = new Produto(102, "Refrigerante", 3.49, Categoria.BEBIDA);
+        Produto suco = new Produto(103, "Suco", 2.99, Categoria.BEBIDA);
+        produtosDisponiveis.add(cerveja);
+        produtosDisponiveis.add(refrigerante);
+        produtosDisponiveis.add(suco);
+
+        Produto sabonete = new Produto(201, "Sabonete", 1.99, Categoria.HIGIENE);
+        Produto shampoo = new Produto(202, "Shampoo", 7.49, Categoria.HIGIENE);
+        Produto pastaDental = new Produto(203, "Pasta Dental", 2.99, Categoria.HIGIENE);
+        produtosDisponiveis.add(sabonete);
+        produtosDisponiveis.add(shampoo);
+        produtosDisponiveis.add(pastaDental);
+    }
 
     @Override
     public void adicionarProduto(Produto produto) {
-        if (estoque == null) {
-            estoque = new HashMap<>();
-        }
-        if (produto == null) {
-            throw new IllegalArgumentException("O produto não pode ser nulo");
-        }
         estoque.put(produto.getCodigo(), produto);
     }
 
     @Override
     public void removerProduto(int codigo) {
-        if (estoque == null) {
-            estoque = new HashMap<>();
-        }
         estoque.remove(codigo);
     }
 
-
     @Override
-    public Produto buscarProduto(int codigo) {
-        if (estoque == null || estoque.isEmpty()) {
-            return null;
+    public Produto buscarProduto(int codigo) throws ProdutoNaoExisteException {
+        Produto produto = estoque.get(codigo);
+        if (produto == null) {
+            throw new ProdutoNaoExisteException("Produto com código " + codigo + " não encontrado");
         }
-        return estoque.get(codigo);
+        return produto;
     }
 
     @Override
     public Collection<Produto> listarProdutos() {
-        if (estoque == null || estoque.isEmpty()) {
-            return Collections.emptyList();
-        }
         return estoque.values();
     }
 
@@ -86,31 +98,25 @@ public class CaixaImpl implements SistemaSupermercadoInterface {
     }
 
     @Override
-    public void removerCliente(Object nome) {
-        if (nome instanceof String) {
-            String nomeCliente = (String) nome;
-            if (clientes == null) {
-                clientes = new HashMap<>();
-            }
-            clientes.remove(nomeCliente);
-        } else {
-            throw new IllegalArgumentException("Tipo de nome inválido. Deve ser uma instância de String.");
+    public void removerCliente(String nome) {
+        if (clientes == null) {
+            clientes = new HashMap<>();
         }
+        clientes.remove(nome);
     }
-    public void setTipoPagamento (TipoPagamento tipoPagamento){
+
+    public void setTipoPagamento(TipoPagamento tipoPagamento) {
         if (tipoPagamento == null) {
             throw new IllegalArgumentException("O pagamento não pode ser nulo");
         }
         this.tipoPagamento = tipoPagamento;
     }
 
-    TipoPagamento getTipoPagamento () {
+    TipoPagamento getTipoPagamento() {
         return tipoPagamento;
     }
+
     public Produto buscarProdutoPorNome(String nomeProduto) {
-        if (estoque == null || estoque.isEmpty()) {
-            return null;
-        }
         for (Produto produto : estoque.values()) {
             if (produto.getNome().equalsIgnoreCase(nomeProduto)) {
                 return produto;
@@ -118,6 +124,7 @@ public class CaixaImpl implements SistemaSupermercadoInterface {
         }
         return null;
     }
+
 
     public void adicionarProdutoAoCarrinho(Produto produto) {
         if (carrinho == null) {
@@ -137,9 +144,6 @@ public class CaixaImpl implements SistemaSupermercadoInterface {
     }
 
     public Collection<Produto> listarProdutosPorCategoria(Categoria categoria) {
-        if (estoque == null || estoque.isEmpty()) {
-            return Collections.emptyList();
-        }
         List<Produto> produtosPorCategoria = new ArrayList<>();
         for (Produto produto : estoque.values()) {
             if (produto.getCategoria() == categoria) {
@@ -148,7 +152,53 @@ public class CaixaImpl implements SistemaSupermercadoInterface {
         }
         return produtosPorCategoria;
     }
+
+
+    public Produto buscarProdutoPorNomeECategoria(String nomeProduto, Categoria categoria) {
+        for (Produto produto : estoque.values()) {
+            if (produto.getNome().equalsIgnoreCase(nomeProduto) && produto.getCategoria() == categoria) {
+                return produto;
+            }
+        }
+        return null;
+    }
+
+
+    public void adicionarProdutoCategoriaBebida(Produto produto) {
+        adicionarProdutoNaCategoria(produto, Categoria.BEBIDA);
+    }
+
+    public void adicionarProdutoCategoriaHigiene(Produto produto) {
+        adicionarProdutoNaCategoria(produto, Categoria.HIGIENE);
+    }
+
+    public void adicionarProdutoCategoriaEnlatados(Produto produto) {
+        adicionarProdutoNaCategoria(produto, Categoria.ENLATADOS);
+    }
+
+    public void adicionarProdutoCategoriaHortifruti(Produto produto) {
+        adicionarProdutoNaCategoria(produto, Categoria.HORTIFRUTI);
+    }
+
+    public void adicionarProdutoCategoriaLimpeza(Produto produto) {
+        adicionarProdutoNaCategoria(produto, Categoria.LIMPEZA);
+    }
+
+    private void adicionarProdutoNaCategoria(Produto produto, Categoria categoria) {
+        if (estoque == null) {
+            estoque = new HashMap<>();
+        }
+        if (produto == null) {
+            throw new IllegalArgumentException("O produto não pode ser nulo");
+        }
+        produto.setCategoria(categoria);
+        estoque.put(produto.getCodigo(), produto);
+    }
+
+    public Collection<Cliente> listarClientes() {
+        if (clientes == null || clientes.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return clientes.values();
+    }
 }
-
-
-

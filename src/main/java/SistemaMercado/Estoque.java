@@ -4,35 +4,38 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Estoque {
-    private Map<String, Integer> produtos;
+    private Map<Integer, Produto> produtos;
 
     public Estoque() {
         this.produtos = new HashMap<>();
+        adicionarProdutosDisponiveis();
     }
 
-    public void adicionarProduto(String nomeProduto, int quantidade) {
-        int estoqueAtual = produtos.getOrDefault(nomeProduto, 0);
-        produtos.put(nomeProduto, estoqueAtual + quantidade);
+    private void adicionarProdutosDisponiveis() {
+        Produto cerveja = new Produto(101, "Cerveja", 5.99, Categoria.BEBIDA);
+        Produto refrigerante = new Produto(102, "Refrigerante", 3.49, Categoria.BEBIDA);
+        Produto suco = new Produto(103, "Suco", 2.99, Categoria.BEBIDA);
+        produtos.put(cerveja.getCodigo(), cerveja);
+        produtos.put(refrigerante.getCodigo(), refrigerante);
+        produtos.put(suco.getCodigo(), suco);
+
+        Produto sabonete = new Produto(201, "Sabonete", 1.99, Categoria.HIGIENE);
+        Produto shampoo = new Produto(202, "Shampoo", 7.49, Categoria.HIGIENE);
+        Produto pastaDental = new Produto(203, "Pasta Dental", 2.99, Categoria.HIGIENE);
+        produtos.put(sabonete.getCodigo(), sabonete);
+        produtos.put(shampoo.getCodigo(), shampoo);
+        produtos.put(pastaDental.getCodigo(), pastaDental);
     }
 
-    public void removerProduto(String nomeProduto, int quantidade) {
-        int estoqueAtual = produtos.getOrDefault(nomeProduto, 0);
-        int novoEstoque = estoqueAtual - quantidade;
-        if (novoEstoque <= 0) {
-            produtos.remove(nomeProduto);
-        } else {
-            produtos.put(nomeProduto, novoEstoque);
-        }
+    public Produto buscarProduto(int codigo) {
+        return produtos.get(codigo);
     }
 
-    public int verificarEstoque(String nomeProduto) {
-        return produtos.getOrDefault(nomeProduto, 0);
+    public void adicionarProduto(Produto produto) {
+        produtos.put(produto.getCodigo(), produto);
     }
 
-    public void exibirEstoque() {
-        System.out.println("Estoque:");
-        for (Map.Entry<String, Integer> entry : produtos.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
+    public void removerProduto(int codigo) {
+        produtos.remove(codigo);
     }
 }

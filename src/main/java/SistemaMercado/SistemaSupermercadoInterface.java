@@ -2,14 +2,21 @@ package SistemaMercado;
 
 import java.util.Collection;
 
-interface SistemaSupermercadoInterface<String> {
+interface SistemaSupermercadoInterface {
 
-    public void adicionarProduto(Produto produto);
-    public void removerProduto(int codigo);
-    public Produto buscarProduto(int codigo) throws ProdutoNaoExisteException;
-    public Collection<Produto> listarProdutos();
-    public double calcularTotal();
-    public void finalizarCompra();
-    public void adicionarCliente(Cliente cliente);
-    public void removerCliente(String nome);
+    void adicionarProduto(Produto produto);
+
+    void removerProduto(int codigo);
+
+    Produto buscarProduto(int codigo) throws ProdutoNaoExisteException;
+
+    Collection<Produto> listarProdutos();
+
+    double calcularTotal();
+
+    void finalizarCompra();
+
+    void adicionarCliente(Cliente cliente);
+
+    void removerCliente(String nome);
 }
